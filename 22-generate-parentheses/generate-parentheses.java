@@ -1,23 +1,19 @@
 class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> ans = new ArrayList<>();
-        int step = 1;
-        backtrack(step,0,0,new String(),ans,n);
+        helper(ans,new String(),0,0,n);
         return ans;
     }
-    private void backtrack(int step,int open,int close,String str,List<String> ans,int n){
-        if(open == close && open + close == 2 * n){
-            System.out.println("Step -> "+(step)+str);
-            ans.add(str);
+    private void helper(List<String> ans,String cur,int open,int close,int n){
+        if(open + close == 2 * n){
+            ans.add(cur);
             return;
         }
         if(open < n){
-            backtrack(step+1,open+1,close,str+"(",ans,n);
-            System.out.println("Step -> "+(step)+str);
+            helper(ans,cur+"(",open+1,close,n);
         }
         if(close < open){
-            backtrack(step-1,open,close+1,str+")",ans,n);
-            System.out.println("Step -> "+(step)+str);
+            helper(ans,cur+")",open,close+1,n);
         }
     }
 }
